@@ -1,0 +1,94 @@
+2025-03-01 01:38:52,102 - youtube-audio-api - INFO - Starting YouTube Audio Downloader API
+2025-03-01 01:38:52,155 - werkzeug - WARNING -  * Debugger is active!
+2025-03-01 01:38:52,168 - werkzeug - INFO -  * Debugger PIN: 751-158-422
+2025-03-01 01:38:52,662 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 01:38:52] "GET / HTTP/1.1" 200 -
+2025-03-01 01:38:52,748 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 01:38:52] "[33mGET /style.css HTTP/1.1[0m" 404 -
+2025-03-01 01:38:52,758 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 01:38:52] "[33mGET /script.js HTTP/1.1[0m" 404 -
+2025-03-01 01:39:53,971 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 01:39:53] "GET / HTTP/1.1" 200 -
+2025-03-01 01:39:54,417 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 01:39:54] "GET /static/style.css HTTP/1.1" 200 -
+2025-03-01 01:39:54,421 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 01:39:54] "GET /static/script.js HTTP/1.1" 200 -
+2025-03-01 01:44:54,049 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 01:44:54] "GET / HTTP/1.1" 200 -
+2025-03-01 01:44:54,130 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 01:44:54] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-03-01 01:44:54,136 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 01:44:54] "GET /static/script.js HTTP/1.1" 200 -
+2025-03-01 11:35:19,047 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 11:35:19] "GET / HTTP/1.1" 200 -
+2025-03-01 11:35:19,163 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 11:35:19] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-03-01 11:35:19,187 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 11:35:19] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2025-03-01 11:45:19,016 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 11:45:19] "GET / HTTP/1.1" 200 -
+2025-03-01 11:45:19,097 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 11:45:19] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-03-01 11:45:19,098 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 11:45:19] "GET /static/script.js HTTP/1.1" 200 -
+2025-03-01 12:30:10,240 - werkzeug - INFO -  * Detected change in 'C:\\Users\\PC\\Downloads\\youtube-downloader\\app.py', reloading
+2025-03-01 12:30:29,078 - youtube-audio-api - INFO - Starting YouTube Audio Downloader API
+2025-03-01 12:30:29,411 - werkzeug - WARNING -  * Debugger is active!
+2025-03-01 12:30:29,430 - werkzeug - INFO -  * Debugger PIN: 751-158-422
+2025-03-01 12:30:29,533 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:30:29] "GET / HTTP/1.1" 200 -
+2025-03-01 12:30:30,054 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:30:30] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-03-01 12:30:30,055 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:30:30] "GET /static/script.js HTTP/1.1" 200 -
+2025-03-01 12:30:50,585 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:30:50] "GET /api/info?url=https://youtu.be/jK2k1P56Cno?si%3DINflLN2uJ3IHHcGe HTTP/1.1" 200 -
+2025-03-01 12:30:50,614 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:30:50] "[35m[1mPOST /api/download HTTP/1.1[0m" 202 -
+2025-03-01 12:30:50,727 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:30:50] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:30:51,783 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:30:51] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:30:52,820 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:30:52] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:30:53,849 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:30:53] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:30:54,915 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:30:54] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:30:56,025 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:30:56] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:30:57,166 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:30:57] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:30:58,271 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:30:58] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:30:59,322 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:30:59] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:00,340 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:00] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:01,422 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:01] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:02,540 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:02] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:03,663 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:03] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:04,801 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:04] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:05,898 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:05] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:06,926 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:06] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:07,958 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:07] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:08,982 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:08] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:10,002 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:10] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:11,032 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:11] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:12,290 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:12] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:13,323 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:13] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:14,356 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:14] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:15,441 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:15] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:16,467 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:16] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:17,491 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:17] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:18,509 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:18] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:19,526 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:19] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:20,544 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:20] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:21,561 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:21] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:22,579 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:22] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:23,598 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:23] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:24,631 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:24] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:25,648 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:25] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:26,666 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:26] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:27,684 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:27] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:28,702 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:28] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:29,720 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:29] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:30,740 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:30] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:31,809 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:31] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:32,854 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:32] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:33,903 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:33] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:34,958 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:34] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:35,975 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:35] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:36,994 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:36] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:38,011 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:38] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:39,028 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:39] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:40,045 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:40] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:41,064 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:41] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:42,081 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:42] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:43,098 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:43] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:44,118 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:44] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:45,133 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:45] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:46,148 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:46] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:47,169 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:47] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:48,189 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:48] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:49,207 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:49] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:50,224 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:50] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:31:50,497 - youtube-audio-api - INFO - File '6852a2ff-76ed-467c-8536-41e946e2dbbf_Poesia Acústica #6 - Era Uma Vez - Mc Cabelinho, Orochi, Bob, Maquiny, Azzy, Filipe Ret, Dudu, Xamã.mp3' available for 60 seconds
+2025-03-01 12:31:51,241 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:31:51] "GET /api/status/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:32:00,051 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:32:00] "GET /api/download/6852a2ff-76ed-467c-8536-41e946e2dbbf HTTP/1.1" 200 -
+2025-03-01 12:32:50,515 - youtube-audio-api - INFO - File '6852a2ff-76ed-467c-8536-41e946e2dbbf_Poesia Acústica #6 - Era Uma Vez - Mc Cabelinho, Orochi, Bob, Maquiny, Azzy, Filipe Ret, Dudu, Xamã.mp3' was auto-deleted
+2025-03-01 12:35:29,096 - youtube-audio-api - INFO - Cleaned up expired file: 6852a2ff-76ed-467c-8536-41e946e2dbbf_Poesia Acústica #6 - Era Uma Vez - Mc Cabelinho, Orochi, Bob, Maquiny, Azzy, Filipe Ret, Dudu, Xamã.info.json
+2025-03-01 12:35:29,109 - youtube-audio-api - INFO - Cleaned up expired file: 6852a2ff-76ed-467c-8536-41e946e2dbbf_Poesia Acústica #6 - Era Uma Vez - Mc Cabelinho, Orochi, Bob, Maquiny, Azzy, Filipe Ret, Dudu, Xamã.webp
+2025-03-01 12:37:03,570 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:37:03] "GET / HTTP/1.1" 200 -
+2025-03-01 12:37:03,647 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:37:03] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2025-03-01 12:37:03,650 - werkzeug - INFO - 127.0.0.1 - - [01/Mar/2025 12:37:03] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
