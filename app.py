@@ -150,6 +150,8 @@ def download_audio(download):
             "verbose": False,
             "writethumbnail": True,
             "writeinfojson": True,
+            # Add cookies from browser to bypass "Sign in to confirm you're not a bot"
+            "cookiesfrombrowser": ("chrome",),  # Use Chrome cookies
         }
         
         # Add download ID to info_dict for tracking in progress_hook
@@ -195,8 +197,24 @@ def download_audio(download):
         
         except Exception as e:
             download.status = DownloadStatus.FAILED
-            download.error = str(e)
-            logger.exception(f"Error downloading {download.url}: {str(e)}")
+            error_message = str(e)
+            
+            # Check for common YouTube errors and provide more user-friendly messages
+            if "Sign in to confirm you're not a bot" in error_message:
+                error_message = "YouTube está exigindo verificação. Tente novamente mais tarde ou use outro vídeo."
+            elif "This video is only available to Music Premium members" in error_message:
+                error_message = "Este vídeo está disponível apenas para assinantes do YouTube Music Premium."
+            elif "Video unavailable" in error_message:
+                error_message = "Este vídeo não está disponível. Ele pode ter sido removido ou estar privado."
+            elif "Private video" in error_message:
+                error_message = "Este vídeo é privado e não pode ser acessado."
+            elif "has been removed for violating" in error_message:
+                error_message = "Este vídeo foi removido por violar os Termos de Serviço do YouTube."
+            elif "This video is not available in your country" in error_message:
+                error_message = "Este vídeo não está disponível no seu país devido a restrições geográficas."
+            
+            download.error = error_message
+            logger.exception(f"Error downloading {download.url}: {error_message}")
         
         finally:
             download.save_metadata()
@@ -466,6 +484,8 @@ def api_info():
             "no_warnings": True,
             "noplaylist": True,
             "skip_download": True,
+            # Add cookies from browser to bypass "Sign in to confirm you're not a bot"
+            "cookiesfrombrowser": ("chrome",),  # Use Chrome cookies
         }
         
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -483,8 +503,18 @@ def api_info():
             })
     
     except Exception as e:
-        logger.exception(f"Error fetching video info: {str(e)}")
-        return jsonify({"error": str(e)}), 500
+        error_message = str(e)
+        
+        # Check for common YouTube errors and provide more user-friendly messages
+        if "Sign in to confirm you're not a bot" in error_message:
+            error_message = "YouTube está exigindo verificação. Tente novamente mais tarde ou use outro vídeo."
+        elif "This video is only available to Music Premium members" in error_message:
+            error_message = "Este vídeo está disponível apenas para assinantes do YouTube Music Premium."
+        elif "Video unavailable" in error_message:
+            error_message = "Este vídeo não está disponível. Ele pode ter sido removido ou estar privado."
+        
+        logger.exception(f"Error fetching video info: {error_message}")
+        return jsonify({"error": error_message}), 500
 
 @app.errorhandler(404)
 def not_found(error):
