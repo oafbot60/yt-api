@@ -135,7 +135,7 @@ def download_audio(download):
         download.progress = 0
         download.save_metadata()
         
-        # Configure yt-dlp options
+        # Configuração do yt-dlp com autenticação via cookies
         ydl_opts = {
             "format": "bestaudio/best",
             "outtmpl": f"{DOWNLOADS_DIR}/{download.id}_%(title)s.%(ext)s",
@@ -150,30 +150,24 @@ def download_audio(download):
             "verbose": False,
             "writethumbnail": True,
             "writeinfojson": True,
+            "cookies": "cookies.txt",  # 🔥 Adiciona autenticação via cookies
         }
-        
-        # Add download ID to info_dict for tracking in progress_hook
-        ydl_opts['__download_id'] = download.id
         
         try:
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                # Add download ID to info_dict
-                ydl.params['__download_id'] = download.id
-                
-                # Extract info first to get metadata
                 info = ydl.extract_info(download.url, download=False)
                 
-                # Update download object with video metadata
+                # Atualiza informações do download
                 download.title = info.get("title", "Unknown Title")
                 download.thumbnail = info.get("thumbnail")
                 download.duration = info.get("duration")
                 download.artist = info.get("artist") or info.get("uploader")
                 download.save_metadata()
                 
-                # Now download the audio
+                # Agora baixa o áudio com autenticação
                 ydl.download([download.url])
                 
-                # Find the downloaded file
+                # Procura o arquivo baixado
                 pattern = os.path.join(DOWNLOADS_DIR, f"{download.id}_*.{download.format}")
                 files = glob.glob(pattern)
                 
@@ -183,20 +177,20 @@ def download_audio(download):
                     download.status = DownloadStatus.COMPLETED
                     download.progress = 100
                     
-                    # Set expiration time
+                    # Define o tempo de expiração
                     download.expires_at = datetime.now().fromtimestamp(time.time() + MAX_FILE_AGE)
                     
-                    # Schedule file deletion
+                    # Agendar exclusão do arquivo
                     schedule_file_deletion(download)
                 else:
                     download.status = DownloadStatus.FAILED
-                    download.error = "File not found after download"
-                    logger.error(f"File not found after download for {download.id}")
+                    download.error = "Arquivo não encontrado após o download"
+                    logger.error(f"Arquivo não encontrado para {download.id}")
         
         except Exception as e:
             download.status = DownloadStatus.FAILED
             download.error = str(e)
-            logger.exception(f"Error downloading {download.url}: {str(e)}")
+            logger.exception(f"Erro ao baixar {download.url}: {str(e)}")
         
         finally:
             download.save_metadata()
