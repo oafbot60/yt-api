@@ -135,7 +135,7 @@ def download_audio(download):
         download.progress = 0
         download.save_metadata()
         
-        # Configuração do yt-dlp com autenticação via cookies
+        # Configure yt-dlp options
         ydl_opts = {
             "format": "bestaudio/best",
             "outtmpl": f"{DOWNLOADS_DIR}/{download.id}_%(title)s.%(ext)s",
@@ -150,24 +150,32 @@ def download_audio(download):
             "verbose": False,
             "writethumbnail": True,
             "writeinfojson": True,
-            "cookies": "cookies.txt",  # 🔥 Adiciona autenticação via cookies
+            # Add cookies from browser to bypass "Sign in to confirm you're not a bot"
+            "cookiesfrombrowser": ("chrome",),  # Use Chrome cookies
         }
+        
+        # Add download ID to info_dict for tracking in progress_hook
+        ydl_opts['__download_id'] = download.id
         
         try:
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                # Add download ID to info_dict
+                ydl.params['__download_id'] = download.id
+                
+                # Extract info first to get metadata
                 info = ydl.extract_info(download.url, download=False)
                 
-                # Atualiza informações do download
+                # Update download object with video metadata
                 download.title = info.get("title", "Unknown Title")
                 download.thumbnail = info.get("thumbnail")
                 download.duration = info.get("duration")
                 download.artist = info.get("artist") or info.get("uploader")
                 download.save_metadata()
                 
-                # Agora baixa o áudio com autenticação
+                # Now download the audio
                 ydl.download([download.url])
                 
-                # Procura o arquivo baixado
+                # Find the downloaded file
                 pattern = os.path.join(DOWNLOADS_DIR, f"{download.id}_*.{download.format}")
                 files = glob.glob(pattern)
                 
@@ -177,20 +185,36 @@ def download_audio(download):
                     download.status = DownloadStatus.COMPLETED
                     download.progress = 100
                     
-                    # Define o tempo de expiração
+                    # Set expiration time
                     download.expires_at = datetime.now().fromtimestamp(time.time() + MAX_FILE_AGE)
                     
-                    # Agendar exclusão do arquivo
+                    # Schedule file deletion
                     schedule_file_deletion(download)
                 else:
                     download.status = DownloadStatus.FAILED
-                    download.error = "Arquivo não encontrado após o download"
-                    logger.error(f"Arquivo não encontrado para {download.id}")
+                    download.error = "File not found after download"
+                    logger.error(f"File not found after download for {download.id}")
         
         except Exception as e:
             download.status = DownloadStatus.FAILED
-            download.error = str(e)
-            logger.exception(f"Erro ao baixar {download.url}: {str(e)}")
+            error_message = str(e)
+            
+            # Check for common YouTube errors and provide more user-friendly messages
+            if "Sign in to confirm you're not a bot" in error_message:
+                error_message = "YouTube está exigindo verificação. Tente novamente mais tarde ou use outro vídeo."
+            elif "This video is only available to Music Premium members" in error_message:
+                error_message = "Este vídeo está disponível apenas para assinantes do YouTube Music Premium."
+            elif "Video unavailable" in error_message:
+                error_message = "Este vídeo não está disponível. Ele pode ter sido removido ou estar privado."
+            elif "Private video" in error_message:
+                error_message = "Este vídeo é privado e não pode ser acessado."
+            elif "has been removed for violating" in error_message:
+                error_message = "Este vídeo foi removido por violar os Termos de Serviço do YouTube."
+            elif "This video is not available in your country" in error_message:
+                error_message = "Este vídeo não está disponível no seu país devido a restrições geográficas."
+            
+            download.error = error_message
+            logger.exception(f"Error downloading {download.url}: {error_message}")
         
         finally:
             download.save_metadata()
@@ -460,6 +484,8 @@ def api_info():
             "no_warnings": True,
             "noplaylist": True,
             "skip_download": True,
+            # Add cookies from browser to bypass "Sign in to confirm you're not a bot"
+            "cookiesfrombrowser": ("chrome",),  # Use Chrome cookies
         }
         
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -477,8 +503,18 @@ def api_info():
             })
     
     except Exception as e:
-        logger.exception(f"Error fetching video info: {str(e)}")
-        return jsonify({"error": str(e)}), 500
+        error_message = str(e)
+        
+        # Check for common YouTube errors and provide more user-friendly messages
+        if "Sign in to confirm you're not a bot" in error_message:
+            error_message = "YouTube está exigindo verificação. Tente novamente mais tarde ou use outro vídeo."
+        elif "This video is only available to Music Premium members" in error_message:
+            error_message = "Este vídeo está disponível apenas para assinantes do YouTube Music Premium."
+        elif "Video unavailable" in error_message:
+            error_message = "Este vídeo não está disponível. Ele pode ter sido removido ou estar privado."
+        
+        logger.exception(f"Error fetching video info: {error_message}")
+        return jsonify({"error": error_message}), 500
 
 @app.errorhandler(404)
 def not_found(error):
