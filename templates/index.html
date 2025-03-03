@@ -3,64 +3,389 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baixar Áudio do YouTube</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Raleway:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>YouTube Audio Downloader</title>
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --primary-hover: #4f46e5;
+            --background-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --warning-color: #f59e0b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        h1 svg {
+            margin-right: 0.75rem;
+            color: var(--primary-color);
+        }
+        
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.125rem;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        input[type="text"], select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border-color);
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+        
+        input[type="text"]:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .radio-option input {
+            margin-right: 0.375rem;
+        }
+        
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.875rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+        
+        button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        button svg {
+            margin-right: 0.5rem;
+        }
+        
+        button.loading .spinner {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .status {
+            margin-top: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            display: none;
+            align-items: center;
+        }
+        
+        .status svg {
+            margin-right: 0.5rem;
+            flex-shrink: 0;
+        }
+        
+        .status.error {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+        
+        .status.success {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: #6ee7b7;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+        
+        .status.warning {
+            background-color: rgba(245, 158, 11, 0.1);
+            color: #fcd34d;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+        
+        #progress-container {
+            margin-top: 1.5rem;
+            display: none;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 0.75rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary-color), #818cf8);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 1rem;
+        }
+        
+        #downloadLink {
+            display: none;
+            margin-top: 1rem;
+            padding: 0.75rem 1rem;
+            background-color: var(--success-color);
+            color: white;
+            text-decoration: none;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+        
+        #downloadLink:hover {
+            background-color: #059669;
+        }
+        
+        #downloadLink svg {
+            margin-right: 0.5rem;
+        }
+        
+        #timer-container {
+            margin-top: 1rem;
+            padding: 0.75rem 1rem;
+            background-color: rgba(245, 158, 11, 0.1);
+            color: #fcd34d;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: 0.5rem;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #timer-container svg {
+            margin-right: 0.5rem;
+        }
+        
+        #video-info {
+            margin-top: 1.5rem;
+            display: none;
+        }
+        
+        .video-info-header {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+        
+        .video-thumbnail {
+            width: 120px;
+            height: 68px;
+            object-fit: cover;
+            border-radius: 0.375rem;
+            margin-right: 1rem;
+        }
+        
+        .video-title {
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .video-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+        
+        .video-detail {
+            display: flex;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+        
+        .video-detail svg {
+            margin-right: 0.375rem;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+        
+        /* New styles for helpful message */
+        #helpful-message {
+            margin-top: 1rem;
+            background-color: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        
+        .helpful-title {
+            display: flex;
+            align-items: center;
+            font-size: 1.125rem;
+            margin-bottom: 0.75rem;
+            color: #93c5fd;
+        }
+        
+        .helpful-title svg {
+            margin-right: 0.5rem;
+        }
+        
+        #helpful-message ul {
+            margin: 0.75rem 0 0.75rem 1.5rem;
+        }
+        
+        #helpful-message li {
+            margin-bottom: 0.375rem;
+        }
+        
+        .helpful-note {
+            margin-top: 0.75rem;
+            font-size: 0.875rem;
+            font-style: italic;
+            color: var(--text-muted);
+        }
+    </style>
 </head>
 <body>
     <div class="container">
+        <header>
+            <h1>
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 18V5l12-2v13"></path>
+                    <circle cx="6" cy="18" r="3"></circle>
+                    <circle cx="18" cy="16" r="3"></circle>
+                </svg>
+                YouTube Audio Downloader
+            </h1>
+            <p class="subtitle">Baixe áudio de vídeos do YouTube em alta qualidade</p>
+        </header>
+        
         <div class="card">
-            <div class="header">
-                <div class="icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M9 18V5l12-2v13"></path>
-                        <circle cx="6" cy="18" r="3"></circle>
-                        <circle cx="18" cy="16" r="3"></circle>
-                    </svg>
-                </div>
-                <h1>Baixar Áudio do YouTube</h1>
-                <p class="subtitle">Extraia áudio de qualquer vídeo em alta qualidade</p>
+            <div class="form-group">
+                <label for="url">Link do YouTube</label>
+                <input type="text" id="url" placeholder="https://www.youtube.com/watch?v=..." autofocus>
             </div>
             
-            <div class="input-group">
-                <div class="input-wrapper">
-                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M14 9.5v5"></path>
-                        <path d="M10 9.5v5"></path>
-                        <path d="M3 9.5v5a2.5 2.5 0 0 0 2.5 2.5h13a2.5 2.5 0 0 0 2.5-2.5v-5a2.5 2.5 0 0 0-2.5-2.5h-13A2.5 2.5 0 0 0 3 9.5z"></path>
-                        <path d="M7 9.5V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v4.5"></path>
-                    </svg>
-                    <input type="text" id="url" placeholder="Cole o link do YouTube aqui">
-                </div>
-                <div class="format-selector">
-                    <label for="format">Formato:</label>
+            <div class="options-grid">
+                <div class="form-group">
+                    <label for="format">Formato</label>
                     <select id="format">
                         <option value="mp3">MP3</option>
                         <option value="m4a">M4A</option>
                         <option value="wav">WAV</option>
                     </select>
                 </div>
-            </div>
-            
-            <div class="quality-selector">
-                <span>Qualidade:</span>
-                <div class="quality-options">
-                    <label class="quality-option">
-                        <input type="radio" name="quality" value="128" checked>
-                        <span>128 kbps</span>
-                    </label>
-                    <label class="quality-option">
-                        <input type="radio" name="quality" value="192">
-                        <span>192 kbps</span>
-                    </label>
-                    <label class="quality-option">
-                        <input type="radio" name="quality" value="320">
-                        <span>320 kbps</span>
-                    </label>
+                
+                <div class="form-group">
+                    <label>Qualidade</label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="quality" value="128">
+                            128 kbps
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="quality" value="192" checked>
+                            192 kbps
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="quality" value="320">
+                            320 kbps
+                        </label>
+                    </div>
                 </div>
             </div>
             
-            <button id="baixarBtn" class="download-btn">
+            <button id="baixarBtn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                     <polyline points="7 10 12 15 17 10"></polyline>
@@ -70,67 +395,42 @@
             </button>
             
             <div id="status" class="status"></div>
-            
-            <div id="progress-container" class="progress-container">
-                <div class="progress-label">
-                    <span id="progress-text">Processando...</span>
-                    <span id="progress-percentage">0%</span>
-                </div>
-                <div class="progress-bar">
-                    <div id="progress-fill" class="progress-fill"></div>
-                </div>
+        </div>
+        
+        <div id="video-info" class="card"></div>
+        
+        <div id="progress-container" class="card">
+            <div class="progress-header">
+                <span id="progress-text">Processando...</span>
+                <span id="progress-percentage">0%</span>
             </div>
-            
-            <a id="downloadLink" href="#" class="download-link" download>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                </svg>
-                Baixar agora
-            </a>
-            
-            <div id="timer-container" class="timer-container">
-                <svg class="timer-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polyline points="12 6 12 12 16 14"></polyline>
-                </svg>
-                <p id="timer" class="timer-text"></p>
-            </div>
-
-            <div class="video-info" id="video-info">
-                <!-- Video info will be populated by JavaScript -->
-            </div>
-            
-            <div class="footer">
-                <p>Este serviço é apenas para uso pessoal e educacional.</p>
-                <p>Não baixe conteúdo protegido por direitos autorais sem permissão.</p>
-                <div class="features">
-                    <div class="feature">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
-                            <path d="m9 12 2 2 4-4"></path>
-                        </svg>
-                        <span>Alta qualidade</span>
-                    </div>
-                    <div class="feature">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
-                            <path d="m9 12 2 2 4-4"></path>
-                        </svg>
-                        <span>Sem limite</span>
-                    </div>
-                    <div class="feature">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
-                            <path d="m9 12 2 2 4-4"></path>
-                        </svg>
-                        <span>Rápido</span>
-                    </div>
-                </div>
+            <div class="progress-bar">
+                <div id="progress-fill" class="progress-fill"></div>
             </div>
         </div>
+        
+        <a id="downloadLink" href="#" class="card">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Clique aqui para baixar
+        </a>
+        
+        <div id="timer-container">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span id="timer">Tempo restante: 60 segundos</span>
+        </div>
+        
+        <footer>
+            <p>© 2025 YouTube Audio Downloader | Desenvolvido com Flask e JavaScript</p>
+        </footer>
     </div>
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    
+    <script src="/static/script.js"></script>
 </body>
 </html>
