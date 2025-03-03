@@ -94,6 +94,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 showStatus('error', 'Erro ao iniciar o download: ' + error.message);
                 resetButtonState();
                 console.error("Erro:", error);
+                
+                // Show helpful message for common errors
+                if (error.message.includes("Sign in to confirm you're not a bot") || 
+                    error.message.includes("verificação")) {
+                    showHelpfulMessage();
+                }
             });
     }
     
@@ -128,6 +134,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else if (data.status === "failed") {
                     showStatus('error', `Falha no download: ${data.error || 'Erro desconhecido'}`);
                     resetButtonState();
+                    
+                    // Show helpful message for common errors
+                    if (data.error && (data.error.includes("Sign in to confirm you're not a bot") || 
+                                      data.error.includes("verificação"))) {
+                        showHelpfulMessage();
+                    }
                 } else {
                     // Continue monitoring
                     setTimeout(() => monitorDownload(downloadId), 1000);
@@ -237,6 +249,12 @@ document.addEventListener('DOMContentLoaded', function() {
         videoInfoElement.style.display = 'none';
         progressFill.style.width = '0%';
         progressPercentage.textContent = '0%';
+        
+        // Remove any helpful message that might be displayed
+        const helpfulMessage = document.getElementById('helpful-message');
+        if (helpfulMessage) {
+            helpfulMessage.remove();
+        }
     }
     
     function showVideoInfo(videoData) {
@@ -294,5 +312,39 @@ document.addEventListener('DOMContentLoaded', function() {
             return (count / 1000).toFixed(1) + 'K';
         }
         return count.toString();
+    }
+    
+    function showHelpfulMessage() {
+        // Remove any existing helpful message
+        const existingMessage = document.getElementById('helpful-message');
+        if (existingMessage) {
+            existingMessage.remove();
+        }
+        
+        // Create helpful message element
+        const helpfulMessage = document.createElement('div');
+        helpfulMessage.id = 'helpful-message';
+        helpfulMessage.className = 'card';
+        helpfulMessage.innerHTML = `
+            <h3 class="helpful-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                Problemas com o download?
+            </h3>
+            <p>O YouTube está exigindo verificação para este vídeo. Aqui estão algumas soluções:</p>
+            <ul>
+                <li>Tente outro vídeo do YouTube</li>
+                <li>Aguarde alguns minutos e tente novamente</li>
+                <li>Use um vídeo menos popular ou mais antigo</li>
+                <li>Tente um vídeo de um canal diferente</li>
+            </ul>
+            <p class="helpful-note">Nota: O YouTube implementa medidas anti-bot que podem impedir o download de certos vídeos, especialmente os mais populares.</p>
+        `;
+        
+        // Insert after the status element
+        statusElement.parentNode.insertBefore(helpfulMessage, statusElement.nextSibling);
     }
 });
